@@ -95,14 +95,16 @@ def edit(roll):
                 db.session.execute(
                         text("""
                             UPDATE studenttable 
-                            SET roll = :roll, name = :name, email = :email, address = :address 
-                            WHERE studenttable.roll = :roll
+                            SET name = :name, email = :email, semester = :semester, address = :address 
+                            WHERE roll = :roll
                         """),
                         {
-                            "roll": roll,
+                            
                             "name": name,
                             "email": email,
-                            "address": address
+                            "semester": semester,
+                            "address": address,
+                            "roll":roll
                         }
                 )
                 db.session.commit()
@@ -113,7 +115,7 @@ def edit(roll):
 
 @app.route("/delete/<string:roll>",methods=['POST','GET'])
 def delete(roll):
-        db.session.execute(text("DELETE FROM studenttable WHERE studenttable.roll =:roll"),
+        db.session.execute(text("DELETE FROM studenttable WHERE roll =:roll"),
                            
                            {"roll":roll}
                            
