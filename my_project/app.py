@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin
 from flask_login import logout_user,login_manager,login_user,LoginManager
 from flask_login import login_required,current_user
-
+from sqlalchemy import text
 
 local_server=True
 app=Flask(__name__)
@@ -135,19 +135,19 @@ def search():
 
     roll = Studenttable.query.filter_by(roll=searched).first()
     if roll:
-        query = db.session.execute("SELECT * FROM studenttable WHERE roll=:roll", {"roll": roll.roll})
+        query = db.session.execute(text("SELECT * FROM studenttable WHERE roll=:roll"), {"roll": roll.roll})
         user_data = query.fetchall()
 
     if not user_data:
         name = Studenttable.query.filter_by(name=searched).first()
         if name:
-            query = db.session.execute("SELECT * FROM studenttable WHERE name=:name", {"name": name.name})
+            query = db.session.execute(text("SELECT * FROM studenttable WHERE name=:name"), {"name": name.name})
             user_data = query.fetchall()
 
     if not user_data:
         city = Studenttable.query.filter_by(address=searched).first()
         if city:
-            query = db.session.execute("SELECT * FROM studenttable WHERE address=:address", {"address": city.address})
+            query = db.session.execute(text("SELECT * FROM studenttable WHERE address=:address"), {"address": city.address})
             user_data = query.fetchall()
 
     if user_data:
