@@ -92,7 +92,7 @@ def edit(roll):
                 semester=request.form.get('semester')
                 address=request.form.get('address')
                 
-                db.session.execute(f"UPDATE studenttable SET `roll` = '{roll}', `name` = '{name}', `email` = '{email}', `address` = '{address}' WHERE studenttable.roll = '{roll}'")
+                db.session.execute(text("UPDATE studenttable SET `roll` = '{roll}', `name` = '{name}', `email` = '{email}', `address` = '{address}' WHERE studenttable.roll = '{roll}'"))
 
                 db.session.commit()
                 flash("YOUR DATA IS UPDATED.","success")
@@ -102,7 +102,7 @@ def edit(roll):
 
 @app.route("/delete/<string:roll>",methods=['POST','GET'])
 def delete(roll):
-        db.session.execute(f"DELETE FROM studenttable WHERE studenttable.roll = '{roll}'")
+        db.session.execute(text("DELETE FROM studenttable WHERE studenttable.roll = '{roll}'"))
         db.session.commit()
         flash("DELETED SUCCESSFULLY!","danger")
         return redirect(url_for('home'))
